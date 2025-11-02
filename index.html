@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Party Calculator</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+
+        function PizzaCalculator() {
+            const [guests, setGuests] = useState(10);
+            const [slicesPerPerson, setSlicesPerPerson] = useState(3);
+            const [selectedStore, setSelectedStore] = useState('dominos');
+            const [selectedSize, setSelectedSize] = useState('large');
+            
+            const pizzaStores = {
+                dominos: {
+                    name: "Domino's",
+                    sizes: {
+                        small: { name: 'Small (10")', slices: 6 },
+                        medium: { name: 'Medium (12")', slices: 8 },
+                        large: { name: 'Large (14")', slices: 8 },
+                        xlarge: { name: 'X-Large (16")', slices: 12 }
+                    }
+                },
+                pizzahut: {
+                    name: "Pizza Hut",
+                    sizes: {
+                        personal: { name: 'Personal Pan', slices: 4 },
+                        medium: { name: 'Medium (12")', slices: 8 },
+                        large: { name: 'Large (14")', slices: 8 },
+                        xlarge: { name: 'Extra Large', slices: 12 }
+                    }
+                },
+                costco: {
+                    name: "Costco",
+                    sizes: {
+                        large: { name: 'Large (18")', slices: 12 }
+                    }
+                },
+                papajohns: {
+                    name: "Papa John's",
+                    sizes: {
+                        small: { name: 'Small (10")', slices: 6 },
+                        medium: { name: 'Medium (12")', slices: 8 },
+                        large: { name: 'Large (14")', slices: 8 },
+                        xlarge: { name: 'Extra Large (16")', slices: 10 }
+                    }
+                },
+                littlecaesars: {
+                    name: "Little Caesars",
+                    sizes: {
+                        small: { name: 'Small', slices: 4 },
+                        medium: { name: 'Medium', slices: 6 },
+                        large: { name: 'Large', slices: 8 },
+                        extramostbestest: { name: 'ExtraMostBestest', slices: 8 }
+                    }
+                },
+                custom: {
+                    name: "Custom",
+                    sizes: {
+                        custom: { name: 'Custom Size', slices: 8 }
+                    }
+                }
+            };
+            
+            const [customSlices, setCustomSlices] = useState(8);
+            
+            const currentStore = pizzaStores[selectedStore];
+            const slicesPerPizza = selectedStore === 'custom' && selectedSize === 'custom' 
+                ? customSlices 
+                : currentStore.sizes[selectedSize]?.slices || 8;
+            
+            const totalSlicesNeeded = guests * slicesPerPerson;
+            const pizzasNeeded = Math.ceil(totalSlicesNeeded / slicesPerPizza);
+            const totalSlices = pizzasNeeded * slicesPerPizza;
+            const leftoverSlices = totalSlices - totalSlicesNeeded;
+            
+            return (
+                <div style={{minHeight: '100vh', background: 'linear-gradient(to bottom right, #fb923c, #ef4444, #ec4899)', padding: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <div style={{background: 'white', borderRadius: '1.5rem', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', padding: '2rem', maxWidth: '48rem', width: '100%'}}>
+                        <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                            <h1 style={{fontSize: '2.25rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem'}}>🍕 Pizza Party Calculator</h1>
+                            <p style={{color: '#6b7280'}}>Plan the perfect amount of pizza for your event!</p>
+                        </div>
+                        
+                        <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
+                            <div style={{background: '#faf5ff', borderRadius: '0.75rem', padding: '1.5rem'}}>
+                                <label style={{fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem', display: 'block'}}>
+                                    🏪 Select Pizza Store
+                                </label>
+                                <select
+                                    value={selectedStore}
+                                    onChange={(e) => {
+                                        setSelectedStore(e.target.value);
+                                        const firstSize = Object.keys(pizzaStores[e.target.value].sizes)[0];
+                                        setSelectedSize(firstSize);
+                                    }}
+                                    style={{width: '100%', padding: '0.75rem 1rem', fontSize: '1.125rem', border: '2px solid #d8b4fe', borderRadius: '0.5rem'}}
+                                >
+                                    {Object.entries(pizzaStores).map(([key, store]) => (
+                                        <option key={key} value={key}>{store.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div style={{background: '#eef2ff', borderRadius: '0.75rem', padding: '1.5rem'}}>
+                                <label style={{fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem', display: 'block'}}>
+                                    🍕 Pizza Size
+                                </label>
+                                <select
+                                    value={selectedSize}
+                                    onChange={(e) => setSelectedSize(e.target.value)}
+                                    style={{width: '100%', padding: '0.75rem 1rem', fontSize: '1.125rem', border: '2px solid #c7d2fe', borderRadius: '0.5rem'}}
+                                >
+                                    {Object.entries(currentStore.sizes).map(([key, size]) => (
+                                        <option key={key} value={key}>
+                                            {size.name} - {size.slices} slices
+                                        </option>
+                                    ))}
+                                </select>
+                                
+                                {selectedStore === 'custom' && selectedSize === 'custom' && (
+                                    <div style={{marginTop: '1rem'}}>
+                                        <label style={{fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem', display: 'block'}}>
+                                            Slices per Pizza
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value={customSlices}
+                                            onChange={(e) => setCustomSlices(Math.max(1, parseInt(e.target.value) || 1))}
+                                            style={{width: '100%', padding: '0.5rem 1rem', fontSize: '1.125rem', border: '2px solid #c7d2fe', borderRadius: '0.5rem'}}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <div style={{background: '#fff7ed', borderRadius: '0.75rem', padding: '1.5rem'}}>
+                                <label style={{fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem', display: 'block'}}>
+                                    👥 Number of Guests
+                                </label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={guests}
+                                    onChange={(e) => setGuests(Math.max(1, parseInt(e.target.value) || 1))}
+                                    style={{width: '100%', padding: '0.75rem 1rem', fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', border: '2px solid #fed7aa', borderRadius: '0.5rem'}}
+                                />
+                            </div>
+                            
+                            <div style={{background: '#fef2f2', borderRadius: '0.75rem', padding: '1.5rem'}}>
+                                <label style={{fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem', display: 'block'}}>
+                                    🍽️ Slices per Person
+                                </label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={slicesPerPerson}
+                                    onChange={(e) => setSlicesPerPerson(Math.max(1, parseInt(e.target.value) || 1))}
+                                    style={{width: '100%', padding: '0.75rem 1rem', fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', border: '2px solid #fecaca', borderRadius: '0.5rem'}}
+                                />
+                                <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '0.75rem', fontSize: '0.875rem', color: '#6b7280'}}>
+                                    <span>Light: 2-3</span>
+                                    <span>Average: 3-4</span>
+                                    <span>Hungry: 4-5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style={{marginTop: '2rem', background: 'linear-gradient(to right, #f97316, #ef4444)', borderRadius: '1rem', padding: '2rem', color: 'white', textAlign: 'center'}}>
+                            <div style={{fontSize: '3.75rem', fontWeight: 'bold', marginBottom: '0.5rem'}}>
+                                🍕 {pizzasNeeded} 🍕
+                            </div>
+                            <p style={{fontSize: '1.5rem', fontWeight: '600', marginBottom: '0.25rem'}}>
+                                {currentStore.sizes[selectedSize]?.name || 'Custom'} Pizzas
+                            </p>
+                            <p style={{fontSize: '1.125rem', opacity: 0.9, marginBottom: '1rem'}}>from {currentStore.name}</p>
+                            <div style={{background: 'rgba(255, 255, 255, 0.2)', borderRadius: '0.5rem', padding: '1rem'}}>
+                                <p style={{fontSize: '1.125rem'}}>Total slices needed: {totalSlicesNeeded}</p>
+                                <p style={{fontSize: '1.125rem'}}>Total slices ordered: {totalSlices}</p>
+                                <p style={{fontSize: '1.125rem'}}>Slices per pizza: {slicesPerPizza}</p>
+                                {leftoverSlices > 0 && (
+                                    <p style={{fontSize: '1.125rem', fontWeight: '600', marginTop: '0.5rem'}}>Extra slices: {leftoverSlices} 🎉</p>
+                                )}
+                            </div>
+                        </div>
+                        
+                        <div style={{marginTop: '1.5rem', textAlign: 'center', fontSize: '0.875rem', color: '#6b7280'}}>
+                            <p>💡 Tip: Order an extra pizza if you want leftovers or have big eaters!</p>
+                        </div>
+                        
+                        <div style={{marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e7eb', textAlign: 'center'}}>
+                            <a href="https://www.hitwebcounter.com" target="_blank" rel="noopener noreferrer">
+                                <img 
+                                    src="https://hitwebcounter.com/counter/counter.php?page=16068936&style=0025&nbdigits=5&type=page&initCount=0" 
+                                    title="Pizza parties planned" 
+                                    alt="visitor counter"
+                                    style={{border: 'none', display: 'inline-block'}}
+                                />
+                            </a>
+                            <p style={{fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.25rem'}}>pizza parties planned 🍕</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<PizzaCalculator />, document.getElementById('root'));
+    </script>
+</body>
+</html>

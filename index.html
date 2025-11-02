@@ -3,11 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizza Party Calculator</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Pizza Calculator - How Many Pizzas Do I Need? | Party Planning Tool</title>
+    <meta name="title" content="Pizza Calculator - How Many Pizzas Do I Need? | Party Planning Tool">
+    <meta name="description" content="Free pizza calculator helps you plan the perfect amount of pizza for your party. Calculate pizzas needed from Domino's, Pizza Hut, Costco & more. Easy party planning tool.">
+    <meta name="keywords" content="pizza calculator, how many pizzas, party planning, pizza party, dominos calculator, pizza hut calculator, event catering calculator">
+    <meta name="author" content="explorer2015">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://explorer2015.github.io/pizza-calculator/">
+    <meta property="og:title" content="Pizza Calculator - How Many Pizzas Do I Need?">
+    <meta property="og:description" content="Free pizza calculator helps you plan the perfect amount of pizza for your party. Calculate pizzas from popular chains instantly.">
+    <meta property="og:image" content="https://explorer2015.github.io/pizza-calculator/pizza-og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://explorer2015.github.io/pizza-calculator/">
+    <meta property="twitter:title" content="Pizza Calculator - How Many Pizzas Do I Need?">
+    <meta property="twitter:description" content="Free pizza calculator helps you plan the perfect amount of pizza for your party. Calculate pizzas from popular chains instantly.">
+    <meta property="twitter:image" content="https://explorer2015.github.io/pizza-calculator/pizza-og-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://explorer2015.github.io/pizza-calculator/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
+    
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Pizza Party Calculator",
+      "url": "https://explorer2015.github.io/pizza-calculator/",
+      "description": "Calculate how many pizzas you need for your party based on guest count and appetite",
+      "applicationCategory": "UtilityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "explorer2015"
+      }
+    }
+    </script>
 </head>
 <body>
     <div id="root"></div>
@@ -209,6 +258,46 @@
                             </a>
                             <p style={{fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.25rem'}}>pizza parties planned 🍕</p>
                         </div>
+                    </div>
+                    
+                    {/* SEO Content */}
+                    <div style={{maxWidth: '48rem', margin: '3rem auto', padding: '2rem', background: 'white', borderRadius: '1rem'}}>
+                        <h2 style={{fontSize: '1.875rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1rem'}}>
+                            How to Calculate Pizza for Your Party
+                        </h2>
+                        <p style={{color: '#4b5563', marginBottom: '1rem', lineHeight: '1.6'}}>
+                            Planning a party and wondering "how many pizzas do I need?" Our free pizza calculator makes it easy! 
+                            Simply enter your guest count, select your pizza store (Domino's, Pizza Hut, Costco, Papa John's, or Little Caesars), 
+                            and we'll calculate exactly how many pizzas to order.
+                        </p>
+                        
+                        <h3 style={{fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', marginTop: '1.5rem', marginBottom: '0.75rem'}}>
+                            Why Use a Pizza Calculator?
+                        </h3>
+                        <ul style={{color: '#4b5563', lineHeight: '1.8', paddingLeft: '1.5rem'}}>
+                            <li>Save money by ordering the right amount</li>
+                            <li>Avoid running out of food at your event</li>
+                            <li>Compare different pizza chains and sizes</li>
+                            <li>Account for different appetite levels</li>
+                            <li>Perfect for birthdays, office parties, game nights, and more</li>
+                        </ul>
+                        
+                        <h3 style={{fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', marginTop: '1.5rem', marginBottom: '0.75rem'}}>
+                            General Pizza Guidelines
+                        </h3>
+                        <p style={{color: '#4b5563', marginBottom: '1rem', lineHeight: '1.6'}}>
+                            Most adults eat 2-4 slices of pizza. Children typically eat 1-3 slices. For mixed groups, 
+                            plan for 3 slices per person. Always round up to ensure you have enough!
+                        </p>
+                        
+                        <h3 style={{fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', marginTop: '1.5rem', marginBottom: '0.75rem'}}>
+                            Supported Pizza Chains
+                        </h3>
+                        <p style={{color: '#4b5563', lineHeight: '1.6'}}>
+                            Our calculator supports popular chains including Domino's Pizza, Pizza Hut, Costco, Papa John's, 
+                            and Little Caesars. Each chain has different slice counts per pizza, so choosing the right one 
+                            ensures accurate calculations for your party planning needs.
+                        </p>
                     </div>
                 </div>
             );
